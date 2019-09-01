@@ -12,7 +12,7 @@ void search(char *file, char *dir)
     DIR *dirptr = opendir(dir);
     if (!dirptr)
     {
-        perror("abc");
+        perror("Cannot Open");
         printf("%s\n", dir);
         exit(-1);
     }
