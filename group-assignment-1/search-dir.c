@@ -64,6 +64,7 @@ void search(char *file, char *dir)
 
 int main(int argc, char *argv[])
 {
-    search(argv[1], ".");
+    // start searching current directory
+    search(argv[1], "."); 
     return 0;
 }
