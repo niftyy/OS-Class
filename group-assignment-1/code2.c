@@ -28,7 +28,7 @@ void search(char *file, char *dir)
             exit(99); // exit status for success
         }
         // check if directory
-        if (strcmp(entry->d_name, "..") != 0 && strcmp(entry->d_name, ".") != 0)
+        if (entry->d_type == DT_DIR && strcmp(entry->d_name, "..") != 0 && strcmp(entry->d_name, ".") != 0)
         {
             int child = fork();
             if (child == 0)
@@ -37,17 +37,17 @@ void search(char *file, char *dir)
                 char path[PATH_MAX];
 
                 strcpy(path,dir);
-		strcat(path,"/");
-		strcat(path,entry->d_name);
+                strcat(path,"/");
+                strcat(path,entry->d_name);
                 
-		dir = path;
+		        dir = path;
                 // printf("%s\n", path);
                 dirptr = opendir(path);
-                //if (!dirptr)
-                //{
-                  //  perror("Cannot open ");
-                   // printf("%s\n", path);
-                //}
+                if (!dirptr)
+                {
+                   perror("Cannot open ");
+                   printf("%s\n", path);
+                }
             }
             else
             {
