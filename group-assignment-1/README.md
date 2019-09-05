@@ -7,5 +7,7 @@ search the file.
 
 ## Solution
 * code1.c works on Mac OSX but doesn't work properly on Linux.
-* code2.c is an updated version of code1.c , suitable to run on all platforms. We replaced snprintf() in code1.c with strcat().
-* code3.c implements execlp() to simulate recursion for searching sub-directories using child processes.
+* code2.c doesn't run on Mac OSX, but works fine on Linux.
+* code3.c implements execlp() to simulate recursion for searching sub-directories using child processes. This implementation is very slow.
+* code4.c is an improvement of code3.c which searches for all instances of the given file name.
+* code5.c is same as code4.c but stops searching after first instance of the file is found.
