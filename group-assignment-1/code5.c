@@ -7,7 +7,8 @@
 #include <limits.h>
 #include <stdlib.h>
 
-void search(char *file, char *dir)
+// this is way more efficient implementation of code4
+void search(char *a, char *dir, char *file)
 {
     DIR *dirptr = opendir(dir);
     if (!dirptr)
@@ -18,7 +19,7 @@ void search(char *file, char *dir)
     }
     struct dirent *entry = readdir(dirptr);
     int status;
-    while ((entry = readdir(dirptr))!=NULL)
+    while ((entry = readdir(dirptr)) != NULL)
     {
         if (strlen(entry->d_name) == strlen(file) && (strcmp(entry->d_name, file) == 0))
         {
@@ -36,18 +37,12 @@ void search(char *file, char *dir)
                 // in child process
                 char path[PATH_MAX];
 
-                strcpy(path,dir);
-                strcat(path,"/");
-                strcat(path,entry->d_name);
-                
-		        dir = path;
-                // printf("%s\n", path);
-                dirptr = opendir(path);
-                if (!dirptr)
-                {
-                   perror("Cannot open ");
-                   printf("%s\n", path);
-                }
+                strcpy(path, dir);
+                strcat(path, "/");
+                strcat(path, entry->d_name);
+
+                if (execlp(a, a, path, file, NULL) == -1)
+                    fprintf(stderr, "execl failed\n");
             }
             else
             {
@@ -68,6 +63,6 @@ void search(char *file, char *dir)
 int main(int argc, char *argv[])
 {
     // start searching current directory
-    search(argv[1], "."); 
+    search(argv[0], argv[1], argv[2]);
     return 0;
 }
